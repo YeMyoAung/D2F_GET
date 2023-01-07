@@ -2,10 +2,54 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx/obs/list.dart';
 import 'package:getx/obs/number.dart';
+import 'package:getx/state_management/get_simple_state_management.dart';
+import 'package:getx/state_management/get_worker_example.dart';
 
-import 'obs/string.dart';
+///
+
+class SubscriptionController extends GetxController {
+  expired() {
+    ///MgMg => Usercontroller =>
+    ///Aung Aung => Usercontroller =>x Usercontroller()
+  }
+}
+
+///a
+class CourseController extends GetxController {
+  ///Logged In
+  Map userInfo = {};
+}
+
+/// Example
 
 void main() {
+  // Socket.connect(host, port)
+
+  ///Available Instance Management
+  // Get.put(Instance()) => Store => use
+  // Get.putAsync(() => Future<>) => Store(Future) => use
+  // Get.lazyPut() => Store => invoke when user interact
+  // Get.replace(); =>
+  // Get.lazyReplace(() => null)
+  // Get.delete()
+  // Get.deleteAll()
+  // Get.find()
+  // Get.isPrepared() ///အသုံးမပြုရသေးတဲ့State
+  // Get.isRegistered() ///DBထည့်ထားပြီးပြီလားစစ်ဖို့အတွက်သုံးတယ်
+  //
+  // Get.find<GetSimpleStateManagement>();
+  // print("Register => ${Get.isRegistered<GetSimpleStateManagement>()}");
+
+  // print("Prepare => ${Get.isPrepared<GetSimpleStateManagement>()}");
+  Get.put(GetSimpleStateManagement(), tag: 'simple');
+
+  ///တူညီ data type တစ်ခုထက်ပိုပြီး ထည့်မယ်ဆိုရင် tagလေးတွေထည့်ပေးရမယ်
+  ///ထည့်မပေးရင် ပထမဆုံးထည့်ခဲ့ကောင်ကိုဘဲရှာပေးမှာ
+  ///tagထည့်လိုက်ပြီဆိုတာနဲ့ Get.find<DataType>()နဲ့ရှုာလို့မရတော့ဘူး
+  ///tagလေးတွေသုံးပြီးတော့ဘဲရှာလို့ရတော့မယ်
+  // Get.put("Hello World", tag: 'hello');
+  // Get.put("Hi World", tag: 'hi');
+  // Get.put("Hii World", tag: 'hii');
   runApp(const MyApp());
 }
 
@@ -33,7 +77,9 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const StringObsScreen(),
+      home: const GetWorkerExample(
+          // title: "SimpleGetStateManagementScreen",
+          ),
     );
   }
 }
