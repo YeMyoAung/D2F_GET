@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx/obs/list.dart';
-import 'package:getx/obs/number.dart';
+import 'package:getx/middleware/permission/permission.dart';
+import 'package:getx/middleware/screen/home_screen.dart';
 import 'package:getx/state_management/get_simple_state_management.dart';
-import 'package:getx/state_management/get_worker_example.dart';
 
 ///
 
@@ -60,10 +59,46 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      routes: {
-        '/number': (_) => const NumberObsScreen(),
-        '/object': (_) => const ObjectObsScreen(),
-      },
+      initialRoute: '/home',
+      getPages: [
+        GetPage(
+          name: '/home',
+          page: () => const MiddlewareScreen(title: 'Home Screen'),
+        ),
+        GetPage(
+          name: '/vaild',
+          page: () => const MiddlewareScreen(title: 'Valid'),
+        ),
+        GetPage(
+          middlewares: [
+            Permission(
+              check: (data) {
+                return data < 5;
+              },
+              next: '/vaild',
+            )
+          ],
+          name: '/login-screen',
+          page: () => const MiddlewareScreen(title: 'Login Screen'),
+        ),
+        GetPage(
+          middlewares: [
+            Permission(
+              check: (data) {
+                return data > 5;
+              },
+              next: '/login-screen',
+            ),
+            HowToCreateMiddleware(),
+          ],
+          name: '/profile',
+          page: () => const MiddlewareScreen(title: 'Profile Screen'),
+        )
+      ],
+      // routes: {
+      //   '/number': (_) => const NumberObsScreen(),
+      //   '/object': (_) => const ObjectObsScreen(),
+      // },
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
@@ -77,9 +112,9 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const GetWorkerExample(
-          // title: "SimpleGetStateManagementScreen",
-          ),
+      // home: const NewFeedScreen(
+      //     // title: "SimpleGetStateManagementScreen",
+      //     ),
     );
   }
 }
