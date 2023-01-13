@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getx/binding/binding/binding.dart';
+import 'package:getx/binding/screen/binding_screen.dart';
+import 'package:getx/binding/translate/translate.dart';
 import 'package:getx/middleware/permission/permission.dart';
 import 'package:getx/middleware/screen/home_screen.dart';
 import 'package:getx/state_management/get_simple_state_management.dart';
@@ -59,8 +62,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialRoute: '/home',
+      locale: const Locale('myanmar'),
+      translations: GetTranslateExample(),
+      initialRoute: '/binding',
       getPages: [
+        GetPage(
+          bindings: [ScreenAndControllerBinding()],
+          name: '/binding',
+          page: () => const BindingHomeScreen(),
+        ),
         GetPage(
           name: '/home',
           page: () => const MiddlewareScreen(title: 'Home Screen'),
@@ -100,6 +110,7 @@ class MyApp extends StatelessWidget {
       //   '/object': (_) => const ObjectObsScreen(),
       // },
       title: 'Flutter Demo',
+      darkTheme: ThemeData.dark(),
       theme: ThemeData(
         // This is the theme of your application.
         //
