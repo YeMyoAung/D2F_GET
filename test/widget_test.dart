@@ -72,6 +72,7 @@ void main() {
     final response =
         await http.get(Uri.parse('https://www.thunderclient.com/welcome'));
     final decode = json.decode(response.body);
+    Map;
     final Parser parser = Parser.test(decode);
   });
 }

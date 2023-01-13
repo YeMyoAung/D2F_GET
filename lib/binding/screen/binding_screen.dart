@@ -14,6 +14,7 @@ class BindingHomeScreen extends StatefulWidget {
 class _BindingHomeScreenState extends State<BindingHomeScreen> {
   @override
   Widget build(BuildContext context) {
+    MediaQuery.of(context).orientation == Orientation.portrait ? '' : '';
     return Scaffold(
       appBar: AppBar(
           // backgroundColor: !Get.isDarkMode ? Colors.pink : Colors.amber,
