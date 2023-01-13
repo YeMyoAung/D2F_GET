@@ -5,26 +5,73 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:flutter/material.dart';
+import 'dart:convert';
+
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:getx/main.dart';
+import 'package:http/http.dart' as http;
+
+class Parser {
+  final String message, about, createdBy, github;
+
+  Parser(this.message, this.about, this.createdBy, this.github);
+
+  factory Parser.test(dynamic decode) => Parser(decode['message'],
+      decode['about'], decode['createdBy'], decode['github']);
+}
+
+class Socail {
+  final String id, description;
+  final bool isActive;
+  final DateTime published;
+  final List pictures, tags;
+  final Profile profile;
+  final List<Like> like;
+  final List<Share> share;
+  final List<Comment> comment;
+
+  Socail(
+      this.id,
+      this.description,
+      this.isActive,
+      this.published,
+      this.pictures,
+      this.tags,
+      this.profile,
+      this.like,
+      this.share,
+      this.comment);
+}
+
+class Profile {
+  final String email, name, gender;
+
+  Profile(this.email, this.name, this.gender);
+}
+
+class Like {
+  final String id, name;
+
+  Like(this.id, this.name);
+}
+
+class Share {
+  final String id, name;
+
+  Share(this.id, this.name);
+}
+
+class Comment {
+  final String id, name, comment;
+
+  Comment(this.id, this.name, this.comment);
+}
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
-
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  test('Model Prase', () async {
+    final response =
+        await http.get(Uri.parse('https://www.thunderclient.com/welcome'));
+    final decode = json.decode(response.body);
+    final Parser parser = Parser.test(decode);
   });
 }
